@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum OrderStatusEnum:int {
     case CART     = 1;
-    case PEDING   = 2;
+    case PENDING   = 2;
     case PAID     = 3;
     case CANCELED = 4;
     case REJECTED = 5;
@@ -13,7 +13,7 @@ enum OrderStatusEnum:int {
     {
         return match ($this){
             self::CART       => 'Criado',
-            self::PEDING     => 'Pendente',
+            self::PENDING      => 'Pendente',
             self::PAID       => 'Pago',
             self::CANCELED   => 'Cancelado',
             self::REJECTED   => 'Não Aprovado',
@@ -32,5 +32,21 @@ enum OrderStatusEnum:int {
             self::REJECTED => 'Não aprovado',
             default => ''
         };
+    }
+
+    public static function parse($status)
+    {
+        switch ($status) {
+            case 'pending':
+                return self::PENDING;
+            case 'approved':
+                return self::PAID;
+            case 'rejected':
+                return self::REJECTED;
+            case 'canceled':
+                return self::CANCELED;
+            default:
+                return self::CANCELED;
+        }
     }
 }
